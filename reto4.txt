@@ -1,0 +1,263 @@
+Plataforma Digital Space.craft
+Space.craft es una plataforma digital que permite rentar naves espaciales en línea a lo largo de toda la galaxia, y para poder soportar su negocio requiere de una base de datos que le permita rápida y oportunamente obtener información de sus viajeros y los servicios solicitados.
+El siguiente Diagrama Entidad Relación (E/R) describe las principales entidades, sus atributos y relaciones:
+* 
+* Los Viajeros son identificados a partir de su identidad, y de ellos se conoce su nombre, especie y opcionalmente su género.
+* Space.craft ofrece en alquiler Naves espaciales para dos tipos de transportes: Individual y Maviso. Toda Nave es identificada por su matrícula y cuenta con un nombre, la longitud en metros y la velocidad máxima que alcanza medida en MGLT (megaluz por hora). Las Naves para transporte Individual, adicionalmente tienen un color y pueden incluir un modelo de androide que apoya su conducción. Por su parte, los Naves para transporte Maviso también cuentan con un número de tripulantes y un número de pasajeros. 
+* Toda nave para transporte Maviso se debe Conducir por un Chofer, y un Chofer solo puede Conducir una Nave para transporte Maviso.
+* De los Choferes se conoce su nombre, su especie y están identificados por su licencia de conducción.
+* Los Viajeros pueden Rentar Naves. No obstante, los Viajeros que son del interés de Space.craft son aquellos que por lo menos han Rentado una Nave. Cuando se Renta una Nave también se hace registro de la fecha, la temporada, la duración en días del servicio y el valor correspondiente.
+El Modelo Relacional que surgió del Diagrama Entidad Relación presentado es siguiente:
+
+Objetivo: Tomando como referencia los modelos presentados, crear los siguientes scripts de SQL:
+1. Scripts de SQL de creación de cada tabla e inserción de datos.
+
+Ejemplo: Script que crea la tabla tabla1 e inserta los siguientes registros:
+
+id	nombre
+1	Hugo
+2	Paco
+3	Luis
+Contenido del script tabla1.sql:
+create table tabla1(
+   t_id	int primary key,
+   t_nombre	char(50) not null
+);
+
+insert into tabla1 values (1, "Hugo");
+insert into tabla1 values (2, "Paco");
+insert into tabla1 values (3, "Luis");
+
+
+1.1 nave.sql: Script de SQL que crea la tabla nave e inserta los registros:
+matricula	nombre	velocidad	longtitud
+1	Halcón Milenario	75	34.37
+2	Ala-X	100	12.5
+3	Ala-Y	80	14
+4	Ala-A	120	9.6
+5	Interceptor TIE	105	9.2
+6	Esclavo 1	70	21.1
+7	Destructor Estelar	60	1600
+8	Estrella de la Muerte	10	120000
+9	Transbordador Imperial	50	20
+10	Ejecutor	40	19000
+1.2 individual.sql: Script de SQL que crea la tabla individual e inserta los registros:
+matricula	color	androide
+2	BLANCO/ROJO	R2-D2
+3	AMARILLO	C-3PO
+4	ROJO	NULL
+5	NEGRO	Androide TIE
+1.3 masivo.sql: Script de SQL que crea la tabla masivo e inserta los registros:
+matricula	tripulantes	pasajeros
+1	4	6
+6	1	6
+7	47060	0
+8	342953	843342
+9	6	20
+10	279144	38000
+1.4 chofer.sql: Script de SQL que crea la tabla chofer e inserta los registros:
+licencia	nombre	especie	masivo
+1	Han Solo	Humano	1
+2	Jango Fett	Mandaloriano	6
+3	General Grievous	Androide	7
+4	Grand Moff Tarkin	Humano	8
+5	Darth Vader	Humano/Androide	9
+6	Kendal Ozzel	Humano	10
+1.5 viajero.sql: Script de SQL que crea la tabla viajero e inserta los registros:
+identidad	nombre	especie	genero
+1	Luke Skywalker	Humano	Masculino
+2	Leia Organa	Humano	Femenino
+3	Rey Skywalker	Humano	Femenino
+4	Obi-Wan Kenobi	Humano	Masculino
+5	Maz Kanata	Humanoide	Femenino
+6	Anakin Skywalker	Humano	Masculino
+7	Yoda	Yoda	Masculino
+8	Ahsoka Tano	Togruta	Femenino
+9	Grogu	Yoda	Masculino
+10	Aayla Secura	Twi'lek	Femenino
+11	Chewbacca	Wookiee	Masculino
+12	Wicket W. Warrick	Ewok	Masculino
+1.6 renta.sql: Script de SQL que crea la tabla renta e inserta los registros:
+id	viajero	nave	fecha	temporada	duracion	valor
+7110	1	10	1977-05-25 00:00:00	Una nueva esperanza	7	36.51
+7143	2	1	2015-12-18 00:00:00	El Despertar de la Fuerza	3	275.96
+7176	3	10	2019-12-20 00:00:00	El Ascenso de Skywalker	17	346.37
+7187	1	6	1983-05-25 00:00:00	El Retorno del JEDI	21	529.97
+7209	4	6	2016-12-16 00:00:00	Rogue One	4	391.29
+7220	2	7	1977-05-25 00:00:00	Una nueva esperanza	21	523.38
+7242	5	6	2005-05-19 00:00:00	La Venganza de los Sith	5	452.94
+7253	3	3	1999-05-19 00:00:00	La Amenaza Fantasma	12	810.32
+7264	1	9	1977-05-25 00:00:00	Una nueva esperanza	19	89.79
+7275	6	1	1980-05-21 00:00:00	El Imperio contraataca	16	283.05
+7286	4	4	2018-05-25 00:00:00	Han Solo	3	162.69
+7297	2	2	2019-12-20 00:00:00	El Ascenso de Skywalker	5	330.68
+7308	7	3	1999-05-19 00:00:00	La Amenaza Fantasma	22	289.85
+7319	5	1	1983-05-25 00:00:00	El Retorno del JEDI	8	382.42
+7330	3	6	2016-12-16 00:00:00	Rogue One	28	361.42
+7341	8	3	2005-05-19 00:00:00	La Venganza de los Sith	4	228.06
+7352	6	10	2018-05-25 00:00:00	Han Solo	21	1331.33
+7363	4	10	2005-05-19 00:00:00	La Venganza de los Sith	29	894.32
+7374	9	1	2015-12-18 00:00:00	El Despertar de la Fuerza	28	2199.39
+7385	7	5	2019-12-20 00:00:00	El Ascenso de Skywalker	13	996.26
+7396	5	2	2019-12-20 00:00:00	El Ascenso de Skywalker	9	650.64
+7407	10	2	2002-05-16 00:00:00	El Ataque de los Clones	8	279.83
+7418	8	3	2017-12-15 00:00:00	Los Últimos JEDI	6	365.99
+7429	6	6	1977-05-25 00:00:00	Una nueva esperanza	2	108.55
+7451	9	2	1999-05-19 00:00:00	La Amenaza Fantasma	16	1402.67
+7462	7	5	2016-12-16 00:00:00	Rogue One	24	2328.07
+7484	10	10	1999-05-19 00:00:00	La Amenaza Fantasma	21	1069.46
+7495	8	3	1977-05-25 00:00:00	Una nueva esperanza	25	2475.1
+7528	9	5	2016-12-16 00:00:00	Rogue One	3	192.25
+7561	10	4	1983-05-25 00:00:00	El Retorno del JEDI	9	333
+2. Script de SQL de consultas: En un mismo archivo (consultas.sql), crear cada una de las consultas solicitadas, anteponiendo a cada consulta “SELECT 'Consulta N';”, donde N es el número correspondiente.
+Ejemplo:
+Consulta 1: Mostrar cada uno de los nombres de los registros de tabla1.
+Consulta 2: Mostrar cada uno de los nombres de los registros de tabla1 ordenados alfabéticamente.
+Debe producir como contenido del archivo consultas.sql:
+SELECT 'Consulta 1';
+SELECT t_nombre FROM tabla1;
+SELECT 'Consulta 2';
+SELECT t_nombre FROM tabla1 order by t_nombre;
+Las consultas a realizar son:
+Consulta 1: Mostrar la información de todos los choferes ordenados alfabéticamente por nombre.
+Consulta 2: Mostrar el nombre, especie y género de los viajeros, y la fecha, duración y valor de las naves espaciales rentadas en los que el chofer que prestó el servicio se llama “General Grievous”.
+Consulta 3: Mostrar el nombre, velocidad y longitud de la nave espacial con mayor longitud que ha sido alquilado para la temporada “El Retorno del JEDI”.
+Consulta 4: Mostrar los nombres de los choferes que por lo menos hayan participado en 3 servicios (agrupar por chofer), la cantidad de servicios en que participó y el promedio de los valores respectivos. 
+Consulta 5: Mostrar los nombres de las temporadas de los servicios (agrupar por temporada), la cantidad de servicios que han tenido lugar, el total (suma) del valor y el total (suma) de la duración correspondientes, ordenados por total de duración en orden descendente.
+Consulta 6: Mostrar los nombres de los 7 principales viajeros de Space.craft  (agrupar por viajero), tomando como referencia las mayores duraciones (suma de todas las duraciones de los servicios que han tomado) en orden descendente.
+Consulta 7: Mostrar el nombre, el androide y el total (suma) del valor asociados a las naves individuales utilizadas en servicios que tiene un androide de apoyo, ordenados por el total del valor de manera ascendente.  Pista: La salida esperada es:
+nombre	androide	total
+Ala-X	R2-D2	2663.82
+Interceptor TIE	Androide TIE	3516.58
+Ala-Y	C-3PO	4169.32Plataforma Digital Space.craft
+Space.craft es una plataforma digital que permite rentar naves espaciales en línea a lo largo de toda la galaxia, y para poder soportar su negocio requiere de una base de datos que le permita rápida y oportunamente obtener información de sus viajeros y los servicios solicitados.
+El siguiente Diagrama Entidad Relación (E/R) describe las principales entidades, sus atributos y relaciones:
+* 
+* Los Viajeros son identificados a partir de su identidad, y de ellos se conoce su nombre, especie y opcionalmente su género.
+* Space.craft ofrece en alquiler Naves espaciales para dos tipos de transportes: Individual y Maviso. Toda Nave es identificada por su matrícula y cuenta con un nombre, la longitud en metros y la velocidad máxima que alcanza medida en MGLT (megaluz por hora). Las Naves para transporte Individual, adicionalmente tienen un color y pueden incluir un modelo de androide que apoya su conducción. Por su parte, los Naves para transporte Maviso también cuentan con un número de tripulantes y un número de pasajeros. 
+* Toda nave para transporte Maviso se debe Conducir por un Chofer, y un Chofer solo puede Conducir una Nave para transporte Maviso.
+* De los Choferes se conoce su nombre, su especie y están identificados por su licencia de conducción.
+* Los Viajeros pueden Rentar Naves. No obstante, los Viajeros que son del interés de Space.craft son aquellos que por lo menos han Rentado una Nave. Cuando se Renta una Nave también se hace registro de la fecha, la temporada, la duración en días del servicio y el valor correspondiente.
+El Modelo Relacional que surgió del Diagrama Entidad Relación presentado es siguiente:
+
+Objetivo: Tomando como referencia los modelos presentados, crear los siguientes scripts de SQL:
+1. Scripts de SQL de creación de cada tabla e inserción de datos.
+
+Ejemplo: Script que crea la tabla tabla1 e inserta los siguientes registros:
+
+id	nombre
+1	Hugo
+2	Paco
+3	Luis
+Contenido del script tabla1.sql:
+create table tabla1(
+   t_id	int primary key,
+   t_nombre	char(50) not null
+);
+
+insert into tabla1 values (1, "Hugo");
+insert into tabla1 values (2, "Paco");
+insert into tabla1 values (3, "Luis");
+
+
+1.1 nave.sql: Script de SQL que crea la tabla nave e inserta los registros:
+matricula	nombre	velocidad	longtitud
+1	Halcón Milenario	75	34.37
+2	Ala-X	100	12.5
+3	Ala-Y	80	14
+4	Ala-A	120	9.6
+5	Interceptor TIE	105	9.2
+6	Esclavo 1	70	21.1
+7	Destructor Estelar	60	1600
+8	Estrella de la Muerte	10	120000
+9	Transbordador Imperial	50	20
+10	Ejecutor	40	19000
+1.2 individual.sql: Script de SQL que crea la tabla individual e inserta los registros:
+matricula	color	androide
+2	BLANCO/ROJO	R2-D2
+3	AMARILLO	C-3PO
+4	ROJO	NULL
+5	NEGRO	Androide TIE
+1.3 masivo.sql: Script de SQL que crea la tabla masivo e inserta los registros:
+matricula	tripulantes	pasajeros
+1	4	6
+6	1	6
+7	47060	0
+8	342953	843342
+9	6	20
+10	279144	38000
+1.4 chofer.sql: Script de SQL que crea la tabla chofer e inserta los registros:
+licencia	nombre	especie	masivo
+1	Han Solo	Humano	1
+2	Jango Fett	Mandaloriano	6
+3	General Grievous	Androide	7
+4	Grand Moff Tarkin	Humano	8
+5	Darth Vader	Humano/Androide	9
+6	Kendal Ozzel	Humano	10
+1.5 viajero.sql: Script de SQL que crea la tabla viajero e inserta los registros:
+identidad	nombre	especie	genero
+1	Luke Skywalker	Humano	Masculino
+2	Leia Organa	Humano	Femenino
+3	Rey Skywalker	Humano	Femenino
+4	Obi-Wan Kenobi	Humano	Masculino
+5	Maz Kanata	Humanoide	Femenino
+6	Anakin Skywalker	Humano	Masculino
+7	Yoda	Yoda	Masculino
+8	Ahsoka Tano	Togruta	Femenino
+9	Grogu	Yoda	Masculino
+10	Aayla Secura	Twi'lek	Femenino
+11	Chewbacca	Wookiee	Masculino
+12	Wicket W. Warrick	Ewok	Masculino
+1.6 renta.sql: Script de SQL que crea la tabla renta e inserta los registros:
+id	viajero	nave	fecha	temporada	duracion	valor
+7110	1	10	1977-05-25 00:00:00	Una nueva esperanza	7	36.51
+7143	2	1	2015-12-18 00:00:00	El Despertar de la Fuerza	3	275.96
+7176	3	10	2019-12-20 00:00:00	El Ascenso de Skywalker	17	346.37
+7187	1	6	1983-05-25 00:00:00	El Retorno del JEDI	21	529.97
+7209	4	6	2016-12-16 00:00:00	Rogue One	4	391.29
+7220	2	7	1977-05-25 00:00:00	Una nueva esperanza	21	523.38
+7242	5	6	2005-05-19 00:00:00	La Venganza de los Sith	5	452.94
+7253	3	3	1999-05-19 00:00:00	La Amenaza Fantasma	12	810.32
+7264	1	9	1977-05-25 00:00:00	Una nueva esperanza	19	89.79
+7275	6	1	1980-05-21 00:00:00	El Imperio contraataca	16	283.05
+7286	4	4	2018-05-25 00:00:00	Han Solo	3	162.69
+7297	2	2	2019-12-20 00:00:00	El Ascenso de Skywalker	5	330.68
+7308	7	3	1999-05-19 00:00:00	La Amenaza Fantasma	22	289.85
+7319	5	1	1983-05-25 00:00:00	El Retorno del JEDI	8	382.42
+7330	3	6	2016-12-16 00:00:00	Rogue One	28	361.42
+7341	8	3	2005-05-19 00:00:00	La Venganza de los Sith	4	228.06
+7352	6	10	2018-05-25 00:00:00	Han Solo	21	1331.33
+7363	4	10	2005-05-19 00:00:00	La Venganza de los Sith	29	894.32
+7374	9	1	2015-12-18 00:00:00	El Despertar de la Fuerza	28	2199.39
+7385	7	5	2019-12-20 00:00:00	El Ascenso de Skywalker	13	996.26
+7396	5	2	2019-12-20 00:00:00	El Ascenso de Skywalker	9	650.64
+7407	10	2	2002-05-16 00:00:00	El Ataque de los Clones	8	279.83
+7418	8	3	2017-12-15 00:00:00	Los Últimos JEDI	6	365.99
+7429	6	6	1977-05-25 00:00:00	Una nueva esperanza	2	108.55
+7451	9	2	1999-05-19 00:00:00	La Amenaza Fantasma	16	1402.67
+7462	7	5	2016-12-16 00:00:00	Rogue One	24	2328.07
+7484	10	10	1999-05-19 00:00:00	La Amenaza Fantasma	21	1069.46
+7495	8	3	1977-05-25 00:00:00	Una nueva esperanza	25	2475.1
+7528	9	5	2016-12-16 00:00:00	Rogue One	3	192.25
+7561	10	4	1983-05-25 00:00:00	El Retorno del JEDI	9	333
+2. Script de SQL de consultas: En un mismo archivo (consultas.sql), crear cada una de las consultas solicitadas, anteponiendo a cada consulta “SELECT 'Consulta N';”, donde N es el número correspondiente.
+Ejemplo:
+Consulta 1: Mostrar cada uno de los nombres de los registros de tabla1.
+Consulta 2: Mostrar cada uno de los nombres de los registros de tabla1 ordenados alfabéticamente.
+Debe producir como contenido del archivo consultas.sql:
+SELECT 'Consulta 1';
+SELECT t_nombre FROM tabla1;
+SELECT 'Consulta 2';
+SELECT t_nombre FROM tabla1 order by t_nombre;
+Las consultas a realizar son:
+Consulta 1: Mostrar la información de todos los choferes ordenados alfabéticamente por nombre.
+Consulta 2: Mostrar el nombre, especie y género de los viajeros, y la fecha, duración y valor de las naves espaciales rentadas en los que el chofer que prestó el servicio se llama “General Grievous”.
+Consulta 3: Mostrar el nombre, velocidad y longitud de la nave espacial con mayor longitud que ha sido alquilado para la temporada “El Retorno del JEDI”.
+Consulta 4: Mostrar los nombres de los choferes que por lo menos hayan participado en 3 servicios (agrupar por chofer), la cantidad de servicios en que participó y el promedio de los valores respectivos. 
+Consulta 5: Mostrar los nombres de las temporadas de los servicios (agrupar por temporada), la cantidad de servicios que han tenido lugar, el total (suma) del valor y el total (suma) de la duración correspondientes, ordenados por total de duración en orden descendente.
+Consulta 6: Mostrar los nombres de los 7 principales viajeros de Space.craft  (agrupar por viajero), tomando como referencia las mayores duraciones (suma de todas las duraciones de los servicios que han tomado) en orden descendente.
+Consulta 7: Mostrar el nombre, el androide y el total (suma) del valor asociados a las naves individuales utilizadas en servicios que tiene un androide de apoyo, ordenados por el total del valor de manera ascendente.  Pista: La salida esperada es:
+nombre	androide	total
+Ala-X	R2-D2	2663.82
+Interceptor TIE	Androide TIE	3516.58
+Ala-Y	C-3PO	4169.32
